@@ -20,3 +20,19 @@ a {
 body {
   line-height: 1;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+* {
+  font-family: 'Orbit', sans-serif;
+}
+
+.container {
+  margin: 30px auto;
+
+  width: 960px;
+  height: 540px;
+
+  /* 영역을 확인하기 위한 부분 */
+  border: 1px solid black;
+  background-color: green;
+}
