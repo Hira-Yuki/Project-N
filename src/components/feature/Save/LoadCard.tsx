@@ -4,13 +4,13 @@ interface CardProps {
   slotNumber: number;
   savedDateTime: string;
   oneLineLog: string;
-  loardHandler: any;
+  loadHandler: any;
 }
 
-function LoardCard({ loardHandler, slotNumber, savedDateTime, oneLineLog }: CardProps) {
+function LoardCard({ loadHandler, slotNumber, savedDateTime, oneLineLog }: CardProps) {
 
   return (
-    <StCardContainer onClick={() => loardHandler(slotNumber)}>
+    <StCardContainer onClick={() => loadHandler(slotNumber)}>
       <StHeader>
         <StCardTitle>슬롯 : {slotNumber}</StCardTitle>
         <StCardText>{savedDateTime}</StCardText>

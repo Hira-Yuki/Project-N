@@ -7,8 +7,8 @@ function Titlepage() {
   const navigate = useNavigate()
   const [isClear, setIsClear] = useState(false)
 
-  const handleLoardButton = () => {
-    navigate("/loard")
+  const handleLoadButton = () => {
+    navigate("/load")
   }
 
 
@@ -18,7 +18,7 @@ function Titlepage() {
         <StTitleName className='title-logo'>흥미를 끌만한 적절한 제목</StTitleName>
         <StMenuBox>
           <StMenuBtn>처음부터</StMenuBtn>
-          <StMenuBtn onClick={handleLoardButton}>이어하기</StMenuBtn>
+          <StMenuBtn onClick={handleLoadButton}>이어하기</StMenuBtn>
           <StMenuBtn disabled={!isClear}>특 전</StMenuBtn>
           <StMenuBtn>설 정</StMenuBtn>
         </StMenuBox>

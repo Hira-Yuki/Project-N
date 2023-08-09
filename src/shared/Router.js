@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Titlepage from "../Pages/Titlepage";
-import Loardpage from "../Pages/Loardpage";
+import Loadpage from "../Pages/Loadpage";
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" index element={<Titlepage />} />
-        <Route path="/loard" index element={<Loardpage />} />
+        <Route path="/load" index element={<Loadpage />} />
       </Routes>
     </BrowserRouter>
   );

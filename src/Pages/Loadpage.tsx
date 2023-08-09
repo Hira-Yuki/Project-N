@@ -1,9 +1,11 @@
 import styled from "styled-components"
-import LoardCard from "../components/feature/Save/LoardCard"
+import LoadCard from "../components/feature/Save/LoadCard"
+import { useNavigate } from "react-router-dom"
 
-function Loardpage() {
+function Loadpage() {
 
-  const loardHandler = (index: Number) => {
+  const navigate = useNavigate()
+  const loadHandler = (index: Number) => {
     // index를 받아 해당 로드 데이터를 서치하여 로드하고 게임 화면으로 이동한다.
   }
 
@@ -11,16 +13,16 @@ function Loardpage() {
     <StContainer>
       <Stheader>
         <StSpan>
-          Loard
+          Load
         </StSpan>
-        <StSpan>
-          &lt;Back
+        <StSpan style={{cursor: "pointer"}} onClick={()=>navigate("/")}>
+          &lt; 타이틀로 돌아가기
         </StSpan>
       </Stheader>
-      {/* 슬롯 4개 */}
+      {/* 슬롯 5개 */}
       {Array.from({ length: 5 }, (_, index) => (
-        <LoardCard
-          loardHandler={loardHandler}
+        <LoadCard
+          loadHandler={loadHandler}
           key={index} slotNumber={index}
           savedDateTime="0000년 00월 00일 00:00"
           oneLineLog="그날 올려다본 하늘은 한 없이 푸르고 아름다웠다."
@@ -30,7 +32,7 @@ function Loardpage() {
   )
 }
 
-export default Loardpage
+export default Loadpage
 
 const StContainer = styled.div`
   flex: 1;
@@ -49,8 +51,4 @@ const StSpan = styled.span`
   font-weight: 700;
   color: white;
   text-shadow: 1px 1px 1px black;
-`
-
-const StFooter = styled.div`
-  
 `
