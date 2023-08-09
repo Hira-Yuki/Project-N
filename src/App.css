@@ -1,38 +1,22 @@
-.App {
-  text-align: center;
+/* Reset CSS */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, img, ul, ol, li, pre, code, a, em, strong, small {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* 추가적인 요소에 대한 스타일 초기화 */
+/* 예: a 태그의 밑줄 제거 */
+a {
+  text-decoration: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/* 기타 초기화 규칙을 추가할 수 있습니다. */
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 사용자 스타일 시트 설정 */
+body {
+  line-height: 1;
 }
