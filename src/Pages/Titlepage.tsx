@@ -4,16 +4,12 @@ import styled from "styled-components"
 import BGIMGE from "../data/Image/_d1b7cf9f-dfe4-411a-b89c-8e733372093c.jpg"
 
 function Titlepage() {
-
   const navigate = useNavigate()
+
   const [isClear, setIsClear] = useState<boolean>(false)
 
-  const handleLoadButton = () => {
-    navigate("/load")
-  }
-
-  const handleStartGameButton = () => {
-    navigate("/playgame")
+  const handleButton = (menu: string) => {
+    navigate(menu)
   }
 
   return (
@@ -21,8 +17,8 @@ function Titlepage() {
       <StTitleArea>
         <StTitleName className='title-logo'>드래곤 캐슬</StTitleName>
         <StMenuBox>
-          <StMenuBtn type="button" onClick={handleStartGameButton}>처음부터</StMenuBtn>
-          <StMenuBtn type="button" onClick={handleLoadButton}>이어하기</StMenuBtn>
+          <StMenuBtn type="button" onClick={()=>handleButton("/playgame")}>처음부터</StMenuBtn>
+          <StMenuBtn type="button" onClick={()=>handleButton("/load")}>이어하기</StMenuBtn>
           <StMenuBtn type="button" disabled={!isClear}>특 전</StMenuBtn>
           <StMenuBtn type="button">설 정</StMenuBtn>
         </StMenuBox>

@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 function PlayGame() {
 
+  // 캐릭터의 대사가 아닌 스크립트에서는 이름 요소를 숨겨서 표시하도록 설정하기 위한 상태 값
   const [nameDisable, setNameDisable] = useState<boolean>(false);
 
   return (
