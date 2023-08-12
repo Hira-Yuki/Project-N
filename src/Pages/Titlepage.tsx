@@ -12,13 +12,16 @@ function Titlepage() {
     navigate("/load")
   }
 
+  const handleStartGameButton = () => {
+    navigate("/playgame")
+  }
 
   return (
     <StContainer>
       <StTitleArea>
         <StTitleName className='title-logo'>드래곤 캐슬</StTitleName>
         <StMenuBox>
-          <StMenuBtn>처음부터</StMenuBtn>
+          <StMenuBtn onClick={handleStartGameButton}>처음부터</StMenuBtn>
           <StMenuBtn onClick={handleLoadButton}>이어하기</StMenuBtn>
           <StMenuBtn disabled={!isClear}>특 전</StMenuBtn>
           <StMenuBtn>설 정</StMenuBtn>
