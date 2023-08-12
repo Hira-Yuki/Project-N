@@ -21,9 +21,18 @@ body {
   line-height: 1;
 }
 
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default; /* 또는 다른 원하는 커서 스타일로 변경 가능 */
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
 * {
   font-family: 'Orbit', sans-serif;
+  user-select: none;
 }
 
 .container {

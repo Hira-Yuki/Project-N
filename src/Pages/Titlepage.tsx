@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import BGIMGE from "../data/Image/_d1b7cf9f-dfe4-411a-b89c-8e733372093c.jpg"
 
 function Titlepage() {
 
@@ -15,7 +16,7 @@ function Titlepage() {
   return (
     <StContainer>
       <StTitleArea>
-        <StTitleName className='title-logo'>흥미를 끌만한 적절한 제목</StTitleName>
+        <StTitleName className='title-logo'>드래곤 캐슬</StTitleName>
         <StMenuBox>
           <StMenuBtn>처음부터</StMenuBtn>
           <StMenuBtn onClick={handleLoadButton}>이어하기</StMenuBtn>
@@ -33,6 +34,9 @@ export default Titlepage
 const StContainer = styled.div`
   width: 100%;
   height: 100%;
+  background-image: url(${BGIMGE}); /* 배경 이미지 설정 */
+  background-size: 100% 100%; /* 이미지를 컨테이너에 맞게 조절 */
+  background-repeat: no-repeat; /* 이미지 반복 없음 */
 `
 
 const StTitleArea = styled.div`
@@ -47,7 +51,7 @@ const StTitleName = styled.h1`
   font-size: 52px;
   font-weight: 600;
 
-  color: white;
+  color: #3447a2;
   text-shadow: 2px 2px 2px black;
 `
 
@@ -64,11 +68,11 @@ const StMenuBtn = styled.button`
   font-size: large;
   background-color: transparent;
   border: 0;
-  color: ${props => props.disabled ? 'gray' : 'white'}; /* 회색 또는 흰색 선택 */
-  text-shadow: 1px 1px 1px black;
+  color: ${props => props.disabled ? 'gray' : '#ffffff'};
+  text-shadow: ${props => props.disabled ? '1px 1px 1px gray' : '2px 2px 2px tomato'};
   &:hover {
-    color: ${props => props.disabled ? 'gray' : 'red'}; /* 회색 또는 빨간색 선택 */
-    text-shadow: ${props => props.disabled ? '1px 1px 1px black' : '1px 1px 1px white'};
+    color: ${props => props.disabled ? 'gray' : 'tomato'};
+    text-shadow: ${props => props.disabled ? '1px 1px 1px gray' : '1px 1px 1px white'};
   }
 `
 
@@ -77,6 +81,6 @@ const StFooter = styled.div`
   display: flex;
   justify-content: center;
 
-  color: white;
-  text-shadow: 1px 1px 1px black;
+  color: #ffffff;
+  -webkit-text-stroke: 1px violet; /* 텍스트 테두리 추가 */
 `

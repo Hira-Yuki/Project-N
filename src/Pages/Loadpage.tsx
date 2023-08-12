@@ -15,19 +15,24 @@ function Loadpage() {
         <StSpan>
           Load
         </StSpan>
-        <StSpan style={{cursor: "pointer"}} onClick={()=>navigate("/")}>
+        <StSpan style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
           &lt; 타이틀로 돌아가기
         </StSpan>
       </Stheader>
-      {/* 슬롯 5개 */}
-      {Array.from({ length: 5 }, (_, index) => (
-        <LoadCard
-          loadHandler={loadHandler}
-          key={index} slotNumber={index}
-          savedDateTime="0000년 00월 00일 00:00"
-          oneLineLog="그날 올려다본 하늘은 한 없이 푸르고 아름다웠다."
-        />
-      ))}
+      <StBody>
+        {/* 슬롯 4개 */}
+        {Array.from({ length: 4 }, (_, index) => (
+          <LoadCard
+            loadHandler={loadHandler}
+            key={index} slotNumber={index}
+            savedDateTime="0000년 00월 00일 00:00"
+            oneLineLog="그날 올려다본 하늘은 한 없이 푸르고 아름다웠다."
+          />
+        ))}
+      </StBody>
+      <StFooter>
+        footer
+      </StFooter>
     </StContainer>
   )
 }
@@ -51,4 +56,11 @@ const StSpan = styled.span`
   font-weight: 700;
   color: white;
   text-shadow: 1px 1px 1px black;
+`
+const StBody = styled.div`
+  
+`
+
+const StFooter = styled.div`
+  
 `
