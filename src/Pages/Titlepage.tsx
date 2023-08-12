@@ -54,16 +54,19 @@ const StTitleName = styled.h1`
   font-size: 52px;
   font-weight: 600;
 
-  color: #3447a2;
+  color: #e96541;
   text-shadow: 2px 2px 2px black;
 `
 
 const StMenuBox = styled.div`
+  border-radius: 20px;
+  border: 3px solid white;
+  background-color: rgba(154, 159, 252, 0.88);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-
+  justify-content: space-around;
+  width: 16%;
   height: 30%;
 `
 
@@ -75,7 +78,8 @@ const StMenuBtn = styled.button`
   text-shadow: ${props => props.disabled ? '1px 1px 1px gray' : '2px 2px 2px tomato'};
   &:hover {
     color: ${props => props.disabled ? 'gray' : 'tomato'};
-    text-shadow: ${props => props.disabled ? '1px 1px 1px gray' : '1px 1px 1px white'};
+    background-color: ${props => props.disabled ? null: 'beige'};
+    /* text-shadow: ${props => props.disabled ? '1px 1px 1px gray' : '1px 1px 1px white'}; */
   }
 `
 
