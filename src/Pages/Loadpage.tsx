@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import LoadCard from "../components/feature/Save/LoadCard"
+import LoadCard from "components/feature/Save/LoadCard"
 import { useNavigate } from "react-router-dom"
 
 function Loadpage() {
@@ -7,6 +7,7 @@ function Loadpage() {
   const navigate = useNavigate()
   const loadHandler = (index: Number) => {
     // index를 받아 해당 로드 데이터를 서치하여 로드하고 게임 화면으로 이동한다.
+    alert(`${index}번 클릭`)
   }
 
   return (
