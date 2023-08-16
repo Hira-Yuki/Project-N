@@ -1,3 +1,4 @@
+import MenuBar from "components/feature/InGameMenu/MenuBar";
 import { useState } from "react"
 import styled from "styled-components"
 
@@ -11,12 +12,7 @@ function PlayGame() {
       <StBottom>
         <StMiniMenuBar>
           {/* 메뉴바 */}
-          <StMenuButton type="button">설정</StMenuButton>
-          <StMenuButton type="button">자동 진행</StMenuButton>
-          <StMenuButton type="button">인터페이스 숨기기</StMenuButton>
-          <StMenuButton type="button">스킵</StMenuButton>
-          <StMenuButton type="button">저장</StMenuButton>
-          <StMenuButton type="button">불러오기</StMenuButton>
+          <MenuBar />
         </StMiniMenuBar>
         <StScriptFeild>
           {/* 스크립트가 표시될 영역 */}
@@ -30,7 +26,6 @@ function PlayGame() {
           </StScriptText>
         </StScriptFeild>
       </StBottom>
-
     </StContainer>
     // 게임을 로드할 때 가져올 데이터를 프롭으로 받아와야함.
     // 인터페이스 요소가 필요.
@@ -82,10 +77,4 @@ const StScriptCharName = styled.div`
 
 const StScriptText = styled.span`
   
-`
-
-const StMenuButton = styled.button`
-  background-color: transparent;
-  border: 0;
-  border: 1px solid black;
 `

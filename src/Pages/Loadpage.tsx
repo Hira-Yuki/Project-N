@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import LoadCard from "components/feature/Save/LoadCard"
 import { useNavigate } from "react-router-dom"
+import { gameState } from "data/GameData/SaveData"
+import { useState } from "react"
 
 function Loadpage() {
 
@@ -10,6 +12,8 @@ function Loadpage() {
     alert(`${index}번 클릭`)
   }
 
+  const loadState = useState(gameState)
+  
   return (
     <StContainer>
       <Stheader>
@@ -26,7 +30,7 @@ function Loadpage() {
           <LoadCard
             loadHandler={loadHandler}
             key={index} slotNumber={index}
-            savedDateTime="0000년 00월 00일 00:00"
+            savedDateTime=" ~~ "
             oneLineLog="그날 올려다본 하늘은 한 없이 푸르고 아름다웠다."
           />
         ))}

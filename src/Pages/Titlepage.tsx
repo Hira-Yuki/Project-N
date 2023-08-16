@@ -15,6 +15,7 @@ function Titlepage() {
   return (
     <StContainer>
       <StTitleArea>
+        {/* 타이틀은 이미지로 예쁘게 만들자... */}
         <StTitleName className='title-logo'>드래곤 캐슬</StTitleName>
         <StMenuBox>
           <StMenuBtn type="button" onClick={()=>handleButton("/playgame")}>처음부터</StMenuBtn>
