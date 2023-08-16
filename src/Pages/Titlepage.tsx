@@ -16,12 +16,12 @@ function Titlepage() {
     <StContainer>
       <StTitleArea>
         {/* 타이틀은 이미지로 예쁘게 만들자... */}
-        <StTitleName className='title-logo'>드래곤 캐슬</StTitleName>
+        <StTitleName className='title-logo'>샘플 타이틀</StTitleName>
         <StMenuBox>
           <StMenuBtn type="button" onClick={()=>handleButton("/playgame")}>처음부터</StMenuBtn>
           <StMenuBtn type="button" onClick={()=>handleButton("/load")}>이어하기</StMenuBtn>
-          <StMenuBtn type="button" disabled={!isClear}>특 전</StMenuBtn>
-          <StMenuBtn type="button">설 정</StMenuBtn>
+          <StMenuBtn type="button" disabled={!isClear} onClick={()=>handleButton("/omake")}>특 전</StMenuBtn>
+          <StMenuBtn type="button" disabled onClick={()=>handleButton("/config")}>설 정</StMenuBtn>
         </StMenuBox>
       </StTitleArea>
       <StFooter>Copyright 2023 Yukihira</StFooter>
