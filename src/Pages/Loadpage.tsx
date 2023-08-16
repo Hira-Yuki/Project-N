@@ -1,8 +1,6 @@
 import styled from "styled-components"
 import LoadCard from "components/feature/Save/LoadCard"
 import { useNavigate } from "react-router-dom"
-import { gameState } from "data/GameData/SaveData"
-import { useState } from "react"
 
 function Loadpage() {
 
@@ -12,8 +10,6 @@ function Loadpage() {
     alert(`${index}번 클릭`)
   }
 
-  const loadState = useState(gameState)
-  
   return (
     <StContainer>
       <Stheader>
