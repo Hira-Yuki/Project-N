@@ -8,6 +8,13 @@ import ScriptDisplay from "components/feature/ScriptDisplay/ScriptDisplay";
 function PlayGame() {
   const navigate = useNavigate();
 
+  const [autoPlay, setAutoPlay] = useState<boolean>(false);
+
+  const toggleAutoPlay = () => {
+    setAutoPlay(prevAutoPlay => !prevAutoPlay);
+  }
+
+
   // 현재 이야기 인덱스와 해당 인덱스의 캐릭터 이름과 스크립트를 상태로 관리
   const [displayIndex, setDisplayIndex] = useState<number>(0);
   const [charName, script]: string[] = story[displayIndex];
@@ -81,12 +88,21 @@ function PlayGame() {
     }
   }, [currentIndex, animationPaused, script]);
 
+  useEffect(() => {
+    if (autoPlay && !animationPaused && !isLastStory && currentIndex !== 0) {
+      const timer = setTimeout(() => {
+        proceedToNextAction();
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [autoPlay, currentIndex]);
+
   return (
     <StContainer>
       <StBottom>
         <StMiniMenuBar>
           {/* 게임 내 메뉴 바 */}
-          <MenuBar />
+          <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} />
         </StMiniMenuBar>
         {/* 스크립트 출력 영역, 클릭하면 조건에 따라 동작 실행 */}
         <ScriptDisplay charName={charName} currentText={currentText} onClick={handleNextClick} />
