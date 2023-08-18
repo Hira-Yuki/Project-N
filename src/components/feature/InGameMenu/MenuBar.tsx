@@ -8,14 +8,18 @@ interface MenuBarProps {
 
 const MenuBar: React.FC<MenuBarProps> = ({ toggleAutoPlay, autoPlay }) => {
 
+  const onClickHandler = () => {
+    alert("아직 구현되지 않은 기능이에용.")
+  }
+
   return (
     <>
-      <StMenuButton type="button">설정</StMenuButton>
       <StMenuButton type="button" onClick={toggleAutoPlay} autoPlay={autoPlay}>자동 진행</StMenuButton>
-      <StMenuButton type="button">인터페이스 숨기기</StMenuButton>
-      <StMenuButton type="button">스킵</StMenuButton>
-      <StMenuButton type="button">저장</StMenuButton>
-      <StMenuButton type="button">불러오기</StMenuButton>
+      <StMenuButton type="button" onClick={onClickHandler}>설정</StMenuButton>
+      <StMenuButton type="button" onClick={onClickHandler}>인터페이스 숨기기</StMenuButton>
+      <StMenuButton type="button" onClick={onClickHandler}>스킵</StMenuButton>
+      <StMenuButton type="button" onClick={onClickHandler}>저장</StMenuButton>
+      <StMenuButton type="button" onClick={onClickHandler}>불러오기</StMenuButton>
     </>
   )
 }

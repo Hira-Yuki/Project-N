@@ -64,7 +64,7 @@ function PlayGame() {
   // 이야기 완료 처리 함수
   const handleStoryCompletion = () => {
     alert("이야기가 끝났습니다.");
-    // localStorage.setItem("isClear", "true");
+    localStorage.setItem("isClear", "true");
     navigate("/");
   };
 

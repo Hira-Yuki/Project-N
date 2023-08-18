@@ -31,9 +31,6 @@ function Loadpage() {
           />
         ))}
       </StBody>
-      <StFooter>
-        footer
-      </StFooter>
     </StContainer>
   )
 }
@@ -59,9 +56,5 @@ const StSpan = styled.span`
   text-shadow: 1px 1px 1px black;
 `
 const StBody = styled.div`
-  
-`
-
-const StFooter = styled.div`
-  
+  flex:1;
 `
