@@ -11,13 +11,7 @@ function Titlepage() {
   useEffect(() => {
     // 로컬 스토리지에서 isClear 값을 가져옵니다.
     const storedIsClear = localStorage.getItem("isClear");
-    if (storedIsClear === null) {
-      // isClear 키가 없을 경우 기본값으로 false를 저장합니다.
-      localStorage.setItem("isClear", "false");
-    } else {
-      // isClear 키가 있을 경우 해당 값을 상태로 설정합니다.
-      setIsClear(storedIsClear === "true");
-    }
+    setIsClear(storedIsClear === "true");
   }, []);
 
   const handleButton = (menu: string) => {
