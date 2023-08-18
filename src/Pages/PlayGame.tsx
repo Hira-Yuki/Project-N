@@ -9,21 +9,48 @@ function PlayGame() {
 
   const [nameDisable, setNameDisable] = useState<boolean>(false);
   const [displayIndex, setDisplayIndex] = useState<number>(0);
-  const [charName, script]: string[]  = story[displayIndex];
+  const [charName, script]: string[] = story[displayIndex];
+
+  const [currentText, setCurrentText] = useState<string>("");
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [animationPaused, setAnimationPaused] = useState<boolean>(false);
 
   const storyHandler = () => {
-    if (displayIndex === story.length - 1) {
-      alert("이야기가 끝났습니다.");
-      navigate("/");
-      return;
+    if (animationPaused) {
+      if (currentIndex < script.length) {
+        setCurrentText(script);
+        setCurrentIndex(script.length);
+      } else {
+        setAnimationPaused(false);
+        setCurrentText("");
+        setCurrentIndex(0);
+        if (displayIndex === story.length - 1) {
+          alert("이야기가 끝났습니다.");
+          navigate("/");
+          return;
+        }
+        setDisplayIndex(displayIndex + 1);
+      }
+    } else {
+      if (currentIndex < script.length) {
+        setCurrentText(script.substring(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        setAnimationPaused(true);
+      }
     }
-    setDisplayIndex(displayIndex + 1);
   };
 
   useEffect(() => {
-    // 스크립트에 이름이 없으면 이름 요소를 숨기도록 설정
     charName !== "" ? setNameDisable(false) : setNameDisable(true);
   }, [charName]);
+
+  useEffect(() => {
+    if (!animationPaused) {
+      const timer = setTimeout(storyHandler, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, animationPaused]);
 
   return (
     <StContainer>
@@ -33,13 +60,9 @@ function PlayGame() {
         </StMiniMenuBar>
         <StScriptFeild onClick={storyHandler}>
           {nameDisable ? null : (
-            <StScriptCharName>
-              〈{charName}〉
-            </StScriptCharName>
+            <StScriptCharName>〈{charName}〉</StScriptCharName>
           )}
-          <StScriptText>
-            {script}
-          </StScriptText>
+          <StScriptText>{currentText}</StScriptText>
         </StScriptFeild>
       </StBottom>
     </StContainer>
