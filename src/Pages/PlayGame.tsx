@@ -26,7 +26,7 @@ function PlayGame() {
   // 조건식 추출하여 변수로 저장
   const isLastStory: boolean = displayIndex === story.length - 1;
   const isAnimationInProgress: boolean = !animationPaused && currentIndex < scriptLength;
-  const isAutoPlayInProgress: boolean = autoPlay && !animationPaused && currentIndex !== 0;
+  const isAutoPlayInProgress: boolean = autoPlay && currentIndex !== 0;
 
 
   // "다음 문장 " 클릭 처리 함수
