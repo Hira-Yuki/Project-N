@@ -8,26 +8,30 @@ import ScriptDisplay from "components/feature/ScriptDisplay/ScriptDisplay";
 function PlayGame() {
   const navigate = useNavigate();
 
+  /* Auto-play 상태 */
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
-
   const toggleAutoPlay = () => {
     setAutoPlay(prevAutoPlay => !prevAutoPlay);
   }
 
-
   // 현재 이야기 인덱스와 해당 인덱스의 캐릭터 이름과 스크립트를 상태로 관리
   const [displayIndex, setDisplayIndex] = useState<number>(0);
   const [charName, script]: string[] = story[displayIndex];
+  const scriptLength = script.length;
   const [currentText, setCurrentText] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [animationPaused, setAnimationPaused] = useState<boolean>(false);
 
+  // 조건식 추출하여 변수로 저장
   const isLastStory: boolean = displayIndex === story.length - 1;
+  const isAnimationInProgress: boolean = !animationPaused && currentIndex < scriptLength;
+  const isAutoPlayInProgress: boolean = autoPlay && !animationPaused && !isLastStory && currentIndex !== 0;
+
 
   // "다음 문장 " 클릭 처리 함수
   const handleNextClick = () => {
     // 애니메이션이 진행 중이면 텍스트를 모두 출력하고 일시정지
-    if (!animationPaused && currentIndex < script.length) {
+    if (isAnimationInProgress) {
       completeTextAnimation();
     } else {
       proceedToNextAction();
@@ -37,7 +41,7 @@ function PlayGame() {
   // 텍스트 애니메이션 완료 함수
   const completeTextAnimation = () => {
     setCurrentText(script);
-    setCurrentIndex(script.length);
+    setCurrentIndex(scriptLength);
     setAnimationPaused(true);
   };
 
@@ -45,7 +49,7 @@ function PlayGame() {
   const proceedToNextAction = () => {
     setAnimationPaused(false);
 
-    if (currentIndex < script.length) {
+    if (currentIndex < scriptLength) {
       completeTextAnimation();
     } else {
       if (isLastStory) {
@@ -78,7 +82,7 @@ function PlayGame() {
 
   useEffect(() => {
     // 애니메이션이 진행 중이고 텍스트 출력이 완료되지 않았으면 타이머 설정하여 한 글자씩 출력
-    if (!animationPaused && currentIndex < script.length) {
+    if (isAnimationInProgress) {
       const timer = setTimeout(() => {
         setCurrentText((prevText) => prevText + script[currentIndex]);
         setCurrentIndex(currentIndex + 1);
@@ -86,16 +90,16 @@ function PlayGame() {
       // 타이머 클리어 함수 반환으로 정리
       return () => clearTimeout(timer);
     }
-  }, [currentIndex, animationPaused, script]);
+  }, [currentIndex, animationPaused, script, isAnimationInProgress]);
 
   useEffect(() => {
-    if (autoPlay && !animationPaused && !isLastStory && currentIndex !== 0) {
+    if (isAutoPlayInProgress) {
       const timer = setTimeout(() => {
         proceedToNextAction();
       }, 2500);
       return () => clearTimeout(timer);
     }
-  }, [autoPlay, currentIndex]);
+  }, [autoPlay, currentIndex, isAutoPlayInProgress, proceedToNextAction]);
 
   return (
     <StContainer>
