@@ -4,16 +4,16 @@ import styled from "styled-components";
 interface TextDisplayProps {
   charName: string;
   currentText: string;
-  onClick: () => void;
+  
 }
 
-const ScriptDisplay: React.FC<TextDisplayProps> = ({ charName, currentText, onClick }) => {
+const ScriptDisplay: React.FC<TextDisplayProps> = ({ charName, currentText }) => {
   
   // 캐릭터 이름이 비어있으면 이름 숨김 처리
   const nameDisable: boolean = charName === "";
 
   return (
-    <StScriptField onClick={onClick}>
+    <StScriptField>
       {nameDisable ? null : <StScriptCharName>〈{charName}〉</StScriptCharName>}
       <StScriptText>{currentText}</StScriptText>
     </StScriptField>

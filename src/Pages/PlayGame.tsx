@@ -103,15 +103,20 @@ function PlayGame() {
   
   }, [autoPlay, currentIndex, isAutoPlayInProgress]);
 
+  // 부모 요소의 클릭 이벤트가 전파되지 않도록 차단!
+  const handleMenuBarClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+    e.stopPropagation();
+  };
+
   return (
-    <StContainer>
+    <StContainer onClick={handleNextClick}>
       <StBottom>
-        <StMiniMenuBar>
+        <StMiniMenuBar onClick={handleMenuBarClick}>
           {/* 게임 내 메뉴 바 */}
           <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} />
         </StMiniMenuBar>
         {/* 스크립트 출력 영역, 클릭하면 조건에 따라 동작 실행 */}
-        <ScriptDisplay charName={charName} currentText={currentText} onClick={handleNextClick} />
+        <ScriptDisplay charName={charName} currentText={currentText}/>
       </StBottom>
     </StContainer>
   );
