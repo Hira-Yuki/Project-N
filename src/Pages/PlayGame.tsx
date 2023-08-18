@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MenuBar from "components/feature/InGameMenu/MenuBar";
-import { story } from "data/Script/Sample";
 import ScriptDisplay from "components/feature/ScriptDisplay/ScriptDisplay";
+import { story } from "data/Script/Sample";
+
 
 function PlayGame() {
   const navigate = useNavigate();
