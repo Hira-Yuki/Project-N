@@ -14,30 +14,23 @@ function PlayGame() {
   const [currentText, setCurrentText] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [animationPaused, setAnimationPaused] = useState<boolean>(false);
+  const [storyFinished, setStoryFinished] = useState<boolean>(false);
 
-  const storyHandler = () => {
-    if (animationPaused) {
-      if (currentIndex < script.length) {
-        setCurrentText(script);
-        setCurrentIndex(script.length);
-      } else {
-        setAnimationPaused(false);
-        setCurrentText("");
-        setCurrentIndex(0);
-        if (displayIndex === story.length - 1) {
-          alert("이야기가 끝났습니다.");
-          navigate("/");
-          return;
-        }
-        setDisplayIndex(displayIndex + 1);
-      }
+  const handleNextClick = () => {
+    if (storyFinished) {
+      setDisplayIndex(displayIndex + 1);
+      setCurrentText("");
+      setCurrentIndex(0);
+      setStoryFinished(false);
+      setAnimationPaused(false);
+    } else if (animationPaused) {
+      setAnimationPaused(false);
+    } else if (currentIndex < script.length) {
+      setCurrentText(script);
+      setCurrentIndex(script.length);
     } else {
-      if (currentIndex < script.length) {
-        setCurrentText(script.substring(0, currentIndex + 1));
-        setCurrentIndex(currentIndex + 1);
-      } else {
-        setAnimationPaused(true);
-      }
+      setAnimationPaused(true);
+      setStoryFinished(true);
     }
   };
 
@@ -46,8 +39,11 @@ function PlayGame() {
   }, [charName]);
 
   useEffect(() => {
-    if (!animationPaused) {
-      const timer = setTimeout(storyHandler, 50);
+    if (!animationPaused && currentIndex < script.length) {
+      const timer = setTimeout(() => {
+        setCurrentText((prevText) => prevText + script[currentIndex]);
+        setCurrentIndex(currentIndex + 1);
+      }, 50);
       return () => clearTimeout(timer);
     }
   }, [currentIndex, animationPaused]);
@@ -58,7 +54,7 @@ function PlayGame() {
         <StMiniMenuBar>
           <MenuBar />
         </StMiniMenuBar>
-        <StScriptFeild onClick={storyHandler}>
+        <StScriptFeild onClick={handleNextClick}>
           {nameDisable ? null : (
             <StScriptCharName>〈{charName}〉</StScriptCharName>
           )}
