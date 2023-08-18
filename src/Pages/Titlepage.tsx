@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import BGIMGE from "data/Image/_d1b7cf9f-dfe4-411a-b89c-8e733372093c.jpg"
@@ -7,6 +7,18 @@ function Titlepage() {
   const navigate = useNavigate()
 
   const [isClear, setIsClear] = useState<boolean>(false)
+
+  useEffect(() => {
+    // 로컬 스토리지에서 isClear 값을 가져옵니다.
+    const storedIsClear = localStorage.getItem("isClear");
+    if (storedIsClear === null) {
+      // isClear 키가 없을 경우 기본값으로 false를 저장합니다.
+      localStorage.setItem("isClear", "false");
+    } else {
+      // isClear 키가 있을 경우 해당 값을 상태로 설정합니다.
+      setIsClear(storedIsClear === "true");
+    }
+  }, []);
 
   const handleButton = (menu: string) => {
     navigate(menu)
@@ -18,10 +30,10 @@ function Titlepage() {
         {/* 타이틀은 이미지로 예쁘게 만들자... */}
         <StTitleName className='title-logo'>샘플 타이틀</StTitleName>
         <StMenuBox>
-          <StMenuBtn type="button" onClick={()=>handleButton("/playgame")}>처음부터</StMenuBtn>
-          <StMenuBtn type="button" onClick={()=>handleButton("/load")}>이어하기</StMenuBtn>
-          <StMenuBtn type="button" disabled={!isClear} onClick={()=>handleButton("/omake")}>특 전</StMenuBtn>
-          <StMenuBtn type="button" disabled onClick={()=>handleButton("/config")}>설 정</StMenuBtn>
+          <StMenuBtn type="button" onClick={() => handleButton("/playgame")}>처음부터</StMenuBtn>
+          <StMenuBtn type="button" onClick={() => handleButton("/load")}>이어하기</StMenuBtn>
+          <StMenuBtn type="button" disabled={!isClear} onClick={() => handleButton("/omake")}>특 전</StMenuBtn>
+          <StMenuBtn type="button" disabled onClick={() => handleButton("/config")}>설 정</StMenuBtn>
         </StMenuBox>
       </StTitleArea>
       <StFooter>Copyright 2023 Yukihira</StFooter>
@@ -75,7 +87,7 @@ const StMenuBtn = styled.button`
   text-shadow: ${props => props.disabled ? '1px 1px 1px gray' : '2px 2px 2px tomato'};
   &:hover {
     color: ${props => props.disabled ? 'gray' : 'tomato'};
-    background-color: ${props => props.disabled ? null: 'beige'};
+    background-color: ${props => props.disabled ? null : 'beige'};
     /* text-shadow: ${props => props.disabled ? '1px 1px 1px gray' : '1px 1px 1px white'}; */
   }
 `

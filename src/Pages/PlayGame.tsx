@@ -63,7 +63,7 @@ function PlayGame() {
   // 이야기 완료 처리 함수
   const handleStoryCompletion = () => {
     alert("이야기가 끝났습니다.");
-    localStorage.setItem("isClear", "true");
+    // localStorage.setItem("isClear", "true");
     navigate("/");
   };
 
@@ -99,6 +99,7 @@ function PlayGame() {
       }, 2500);
       return () => clearTimeout(timer);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlay, currentIndex, isAutoPlayInProgress]);
 
   return (
