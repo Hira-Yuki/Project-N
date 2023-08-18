@@ -99,7 +99,7 @@ function PlayGame() {
       }, 2500);
       return () => clearTimeout(timer);
     }
-  }, [autoPlay, currentIndex, isAutoPlayInProgress, proceedToNextAction]);
+  }, [autoPlay, currentIndex, isAutoPlayInProgress]);
 
   return (
     <StContainer>
