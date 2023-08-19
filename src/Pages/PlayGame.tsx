@@ -9,9 +9,10 @@ import { story } from "data/Script/Sample";
 function PlayGame() {
   const navigate = useNavigate();
 
-  // Auto-play 상태 
+  // 게임 내 기능 상태 
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
+  const [uiDisplay, setUiDisplay] = useState<boolean>(false);
 
   // 현재 이야기 인덱스와 해당 인덱스의 캐릭터 이름과 스크립트를 상태로 관리
   const [displayIndex, setDisplayIndex] = useState<number>(0);
@@ -35,7 +36,7 @@ function PlayGame() {
     }
     setAutoPlay((prevAutoPlay) => !prevAutoPlay);
   };
-  
+
   const toggleSkip = () => {
     // 자동 진행이 활성화 되어 있으면 자동 진행을 비활성화 시켜줌
     if (autoPlay) {
@@ -44,8 +45,24 @@ function PlayGame() {
     setSkip((prevSkip) => !prevSkip);
   };
 
+  const toggleUiDisplay = () => {
+    togglePause()
+    setUiDisplay(prev => !prev)
+  }
+
+  // 인게임 기능을 호출할때 오토와 스킵이 중단되도록 동작할 함수
+  const togglePause = () => {
+    setAutoPlay(false);
+    setSkip(false);
+  }
+
   // "다음 문장" 처리 함수
   const handleNextClick = () => {
+    if(uiDisplay) {
+      setUiDisplay(false);
+      // ui 숨기기가 참일때는 다음 텍스트로 넘어가는 동작이 발생하면 안되므로 리턴하여 다음 동작을 차단함
+      return;
+    }
     // 애니메이션이 진행 중이면 텍스트를 모두 출력하고 일시정지
     if (isAnimationInProgress) {
       completeTextAnimation();
@@ -115,7 +132,7 @@ function PlayGame() {
       // 타이머 클리어 함수 반환으로 정리
       return () => clearTimeout(timer);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, animationPaused, script, isAnimationInProgress, skip]);
 
   useEffect(() => {
@@ -130,9 +147,6 @@ function PlayGame() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlay, currentIndex, isAutoPlayInProgress]);
 
-
-
-
   // 부모 요소의 클릭 이벤트가 전파되지 않도록 차단!
   const handleMenuBarClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     e.stopPropagation();
@@ -140,14 +154,16 @@ function PlayGame() {
 
   return (
     <StContainer onClick={handleNextClick}>
-      <StBottom>
-        <StMiniMenuBar onClick={handleMenuBarClick}>
-          {/* 게임 내 메뉴 바 */}
-          <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} skip={skip} toggleSkip={toggleSkip} />
-        </StMiniMenuBar>
-        {/* 스크립트 출력 영역, 클릭하면 조건에 따라 동작 실행 */}
-        <ScriptDisplay charName={charName} currentText={currentText} />
-      </StBottom>
+      {uiDisplay ? null : (
+        <StBottom>
+          <StMiniMenuBar onClick={handleMenuBarClick}>
+            {/* 게임 내 메뉴 바 */}
+            <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} skip={skip} toggleSkip={toggleSkip} toggleUiDisplay={toggleUiDisplay} />
+          </StMiniMenuBar>
+          {/* 스크립트 출력 영역, 클릭하면 조건에 따라 동작 실행 */}
+          <ScriptDisplay charName={charName} currentText={currentText} />
+        </StBottom>
+      )}
     </StContainer>
   );
 }

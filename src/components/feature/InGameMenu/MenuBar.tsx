@@ -4,11 +4,12 @@ import styled, { css, keyframes } from "styled-components"
 interface MenuBarProps {
   toggleAutoPlay: () => void;
   toggleSkip: () => void;
+  toggleUiDisplay: () => void;
   autoPlay: boolean;
   skip: boolean;
 }
 
-const MenuBar: React.FC<MenuBarProps> = ({ toggleAutoPlay, autoPlay, toggleSkip, skip }) => {
+const MenuBar: React.FC<MenuBarProps> = ({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay }) => {
 
   const onClickHandler = () => {
     alert("아직 구현되지 않은 기능이에용.")
@@ -19,7 +20,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleAutoPlay, autoPlay, toggleSkip,
       <StMenuButton type="button" onClick={toggleSkip} skip={skip}>스킵</StMenuButton>
       <StMenuButton type="button" onClick={toggleAutoPlay} autoPlay={autoPlay}>자동 진행</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>설정</StMenuButton>
-      <StMenuButton type="button" onClick={onClickHandler}>인터페이스 숨기기</StMenuButton>
+      <StMenuButton type="button" onClick={toggleUiDisplay}>인터페이스 숨기기</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>저장</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>불러오기</StMenuButton>
     </>
