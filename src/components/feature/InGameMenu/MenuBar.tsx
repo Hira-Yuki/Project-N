@@ -16,10 +16,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleAutoPlay, autoPlay, toggleSkip,
 
   return (
     <>
+      <StMenuButton type="button" onClick={toggleSkip} skip={skip}>스킵</StMenuButton>
       <StMenuButton type="button" onClick={toggleAutoPlay} autoPlay={autoPlay}>자동 진행</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>설정</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>인터페이스 숨기기</StMenuButton>
-      <StMenuButton type="button" onClick={toggleSkip} skip={skip}>스킵</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>저장</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>불러오기</StMenuButton>
     </>
@@ -48,12 +48,12 @@ const StMenuButton = styled.button<MenuButtonProps>`
   border: 1px solid black;
 
   ${props =>
-    props.autoPlay || props.skip 
-    ?
-    css`
+    props.autoPlay || props.skip
+      ?
+      css`
       animation: ${blinkingAnimation} 2s infinite;
       animation-timing-function: ease-in-out;
     `
-    :
-    ''};
+      :
+      ''};
 `;

@@ -120,14 +120,9 @@ function PlayGame() {
       // 타이머 클리어 함수 반환으로 정리
       return () => clearTimeout(timer);
     }
-  }, [currentIndex, animationPaused, script, isAnimationInProgress]);
+  }, [currentIndex, animationPaused, script, isAnimationInProgress, skip]);
 
   useEffect(() => {
-
-    if (skip) {
-      return; // 스킵이 활성화되었다면 효과 코드 실행을 중단합니다.
-    }
-
     if (isAutoPlayInProgress) {
       const timer = setTimeout(() => {
         proceedToNextAction();
@@ -136,7 +131,8 @@ function PlayGame() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPlay]);
+  }, [autoPlay, currentIndex, isAutoPlayInProgress]);
+
 
 
 
