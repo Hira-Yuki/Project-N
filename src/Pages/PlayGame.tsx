@@ -29,24 +29,20 @@ function PlayGame() {
 
   // 토클 기능
   const toggleAutoPlay = () => {
-    setAutoPlay((prevAutoPlay) => {
-      // 스킵 모드가 활성화되어 있다면 autoPlay를 무조건 비활성화
-      if (skip) {
-        setSkip(false); // 스킵 모드 비활성화
-      }
-      return !prevAutoPlay; // autoPlay 토글
-    });
-  }
-
+    // 스킵이 활성화 되어 있으면 스킵을 비활성화 시켜줌
+    if (skip) {
+      setSkip(false);
+    }
+    setAutoPlay((prevAutoPlay) => !prevAutoPlay);
+  };
+  
   const toggleSkip = () => {
-    setSkip((prevSkip) => {
-      // autoPlay 모드가 활성화되어 있다면 스킵을 무조건 비활성화
-      if (autoPlay) {
-        setAutoPlay(false); // autoPlay 모드 비활성화
-      }
-      return !prevSkip; // 스킵 토글
-    });
-  }
+    // 자동 진행이 활성화 되어 있으면 자동 진행을 비활성화 시켜줌
+    if (autoPlay) {
+      setAutoPlay(false);
+    }
+    setSkip((prevSkip) => !prevSkip);
+  };
 
   // "다음 문장" 처리 함수
   const handleNextClick = () => {
@@ -101,7 +97,6 @@ function PlayGame() {
   };
 
   useEffect(() => {
-
     // 스킵 기능이 활성화되어 있는지 확인합니다.
     if (skip) {
       completeTextAnimation(); // 스킵이 활성화되면 텍스트 전체 출력 함수 호출
@@ -120,9 +115,11 @@ function PlayGame() {
       // 타이머 클리어 함수 반환으로 정리
       return () => clearTimeout(timer);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, animationPaused, script, isAnimationInProgress, skip]);
 
   useEffect(() => {
+    // 자동 진행 기능 실행
     if (isAutoPlayInProgress) {
       const timer = setTimeout(() => {
         proceedToNextAction();
