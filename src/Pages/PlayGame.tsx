@@ -9,11 +9,9 @@ import { story } from "data/Script/Sample";
 function PlayGame() {
   const navigate = useNavigate();
 
-  /* Auto-play 상태 */
+  // Auto-play 상태 
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
-  const toggleAutoPlay = () => {
-    setAutoPlay(prevAutoPlay => !prevAutoPlay);
-  }
+  const [skip, setSkip] = useState<boolean>(false);
 
   // 현재 이야기 인덱스와 해당 인덱스의 캐릭터 이름과 스크립트를 상태로 관리
   const [displayIndex, setDisplayIndex] = useState<number>(0);
@@ -29,7 +27,28 @@ function PlayGame() {
   const isAnimationInProgress: boolean = !animationPaused && currentIndex < scriptLength;
   const isAutoPlayInProgress: boolean = autoPlay && currentIndex !== 0;
 
-  // "다음 문장 " 클릭 처리 함수
+  // 토클 기능
+  const toggleAutoPlay = () => {
+    setAutoPlay((prevAutoPlay) => {
+      // 스킵 모드가 활성화되어 있다면 autoPlay를 무조건 비활성화
+      if (skip) {
+        setSkip(false); // 스킵 모드 비활성화
+      }
+      return !prevAutoPlay; // autoPlay 토글
+    });
+  }
+
+  const toggleSkip = () => {
+    setSkip((prevSkip) => {
+      // autoPlay 모드가 활성화되어 있다면 스킵을 무조건 비활성화
+      if (autoPlay) {
+        setAutoPlay(false); // autoPlay 모드 비활성화
+      }
+      return !prevSkip; // 스킵 토글
+    });
+  }
+
+  // "다음 문장" 처리 함수
   const handleNextClick = () => {
     // 애니메이션이 진행 중이면 텍스트를 모두 출력하고 일시정지
     if (isAnimationInProgress) {
@@ -82,6 +101,16 @@ function PlayGame() {
   };
 
   useEffect(() => {
+
+    // 스킵 기능이 활성화되어 있는지 확인합니다.
+    if (skip) {
+      completeTextAnimation(); // 스킵이 활성화되면 텍스트 전체 출력 함수 호출
+      setTimeout(() => {
+        proceedToNextAction(); // 일정 시간 뒤에 다음 문장 출력 함수 호출
+      }, 150);
+      return; // 스킵 모드에서는 나머지 효과 코드 실행을 중단합니다.
+    }
+
     // 애니메이션이 진행 중이고 텍스트 출력이 완료되지 않았으면 타이머 설정하여 한 글자씩 출력
     if (isAnimationInProgress) {
       const timer = setTimeout(() => {
@@ -94,15 +123,22 @@ function PlayGame() {
   }, [currentIndex, animationPaused, script, isAnimationInProgress]);
 
   useEffect(() => {
+
+    if (skip) {
+      return; // 스킵이 활성화되었다면 효과 코드 실행을 중단합니다.
+    }
+
     if (isAutoPlayInProgress) {
       const timer = setTimeout(() => {
         proceedToNextAction();
       }, 2500);
       return () => clearTimeout(timer);
     }
-  
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPlay, currentIndex, isAutoPlayInProgress]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoPlay]);
+
+
 
   // 부모 요소의 클릭 이벤트가 전파되지 않도록 차단!
   const handleMenuBarClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
@@ -114,10 +150,10 @@ function PlayGame() {
       <StBottom>
         <StMiniMenuBar onClick={handleMenuBarClick}>
           {/* 게임 내 메뉴 바 */}
-          <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} />
+          <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} skip={skip} toggleSkip={toggleSkip} />
         </StMiniMenuBar>
         {/* 스크립트 출력 영역, 클릭하면 조건에 따라 동작 실행 */}
-        <ScriptDisplay charName={charName} currentText={currentText}/>
+        <ScriptDisplay charName={charName} currentText={currentText} />
       </StBottom>
     </StContainer>
   );
