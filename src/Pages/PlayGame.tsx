@@ -17,17 +17,17 @@ function PlayGame() {
 
   // 현재 이야기 인덱스와 해당 인덱스의 캐릭터 이름과 스크립트를 상태로 관리
   const [displayIndex, setDisplayIndex] = useState<number>(0);
-  const [charName, script]: string[] = story[displayIndex];
-  const scriptLength = script.length;
+  const [charName, script]: [string, string] = story[displayIndex];
   const [currentText, setCurrentText] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [animationPaused, setAnimationPaused] = useState<boolean>(false);
+
+  const scriptLength = script.length;
 
   // 조건식 추출하여 변수로 저장
   const isLastStory: boolean = displayIndex === story.length - 1;
   const isAnimationInProgress: boolean = !animationPaused && currentIndex < scriptLength;
   const isAutoPlayInProgress: boolean = autoPlay && currentIndex !== 0;
-
 
   // "다음 문장 " 클릭 처리 함수
   const handleNextClick = () => {
@@ -101,6 +101,7 @@ function PlayGame() {
       return () => clearTimeout(timer);
     }
   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlay, currentIndex, isAutoPlayInProgress]);
 
   // 부모 요소의 클릭 이벤트가 전파되지 않도록 차단!
