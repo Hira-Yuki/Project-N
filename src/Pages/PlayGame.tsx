@@ -12,7 +12,7 @@ function PlayGame() {
   // 게임 내 기능 상태 
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
-  const [uiDisplay, setUiDisplay] = useState<boolean>(false);
+  const [uiDisable, setUiDisable] = useState<boolean>(false);
 
   // 현재 이야기 인덱스와 해당 인덱스의 캐릭터 이름과 스크립트를 상태로 관리
   const [displayIndex, setDisplayIndex] = useState<number>(0);
@@ -47,7 +47,7 @@ function PlayGame() {
 
   const toggleUiDisplay = () => {
     togglePause()
-    setUiDisplay(prev => !prev)
+    setUiDisable(prev => !prev)
   }
 
   // 인게임 기능을 호출할때 오토와 스킵이 중단되도록 동작할 함수
@@ -58,8 +58,8 @@ function PlayGame() {
 
   // "다음 문장" 처리 함수
   const handleNextClick = () => {
-    if (uiDisplay) {
-      setUiDisplay(false);
+    if (uiDisable) {
+      setUiDisable(false);
       // ui 숨기기가 참일때는 다음 텍스트로 넘어가는 동작이 발생하면 안되므로 리턴하여 다음 동작을 차단함
       return;
     }
@@ -154,7 +154,7 @@ function PlayGame() {
 
   return (
     <StContainer onClick={handleNextClick}>
-      {uiDisplay ? null : (
+      {uiDisable ? null : (
         <StBottom>
           <StMiniMenuBar onClick={handleMenuBarClick}>
             {/* 게임 내 메뉴 바 */}
