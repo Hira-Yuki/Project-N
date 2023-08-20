@@ -58,7 +58,7 @@ function PlayGame() {
 
   // "다음 문장" 처리 함수
   const handleNextClick = () => {
-    if(uiDisplay) {
+    if (uiDisplay) {
       setUiDisplay(false);
       // ui 숨기기가 참일때는 다음 텍스트로 넘어가는 동작이 발생하면 안되므로 리턴하여 다음 동작을 차단함
       return;
