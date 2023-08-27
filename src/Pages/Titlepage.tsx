@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import BGIMGE from "data/Image/_d1b7cf9f-dfe4-411a-b89c-8e733372093c.jpg"
+import BGIMGE from "assets/Image/_d1b7cf9f-dfe4-411a-b89c-8e733372093c.jpg"
 
 function Titlepage() {
   const navigate = useNavigate()

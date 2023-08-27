@@ -7,7 +7,7 @@ interface TextDisplayProps {
 
 }
 
-const ScriptDisplay: React.FC<TextDisplayProps> = ({ charName, currentText }) => {
+function ScriptDisplay({ charName, currentText }: TextDisplayProps) {
 
   // 캐릭터 이름이 비어있으면 이름 숨김 처리
   const nameDisable: boolean = charName === "";
