@@ -5,11 +5,12 @@ interface MenuBarProps {
   toggleAutoPlay: () => void;
   toggleSkip: () => void;
   toggleUiDisplay: () => void;
+  toggleBackLog: () => void;
   autoPlay: boolean;
   skip: boolean;
 }
 
-function MenuBar({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay }: MenuBarProps) {
+function MenuBar({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay, toggleBackLog }: MenuBarProps) {
 
   const onClickHandler = () => {
     alert("아직 구현되지 않은 기능이에용.")
@@ -20,7 +21,7 @@ function MenuBar({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay }
       <StMenuButton type="button" onClick={toggleSkip} skip={skip}>스킵</StMenuButton>
       <StMenuButton type="button" onClick={toggleAutoPlay} autoPlay={autoPlay}>자동 진행</StMenuButton>
       {/* 백로그 기능은 모달료 구현합니다. */}
-      <StMenuButton type="button" onClick={onClickHandler}>백로그</StMenuButton>
+      <StMenuButton type="button" onClick={toggleBackLog}>백로그</StMenuButton>
       <StMenuButton type="button" onClick={toggleUiDisplay}>인터페이스 숨기기</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>설정</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>저장</StMenuButton>

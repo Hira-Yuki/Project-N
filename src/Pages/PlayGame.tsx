@@ -4,6 +4,7 @@ import styled from "styled-components";
 import MenuBar from "components/feature/InGameMenu/MenuBar";
 import ScriptDisplay from "components/feature/ScriptDisplay/ScriptDisplay";
 import { story } from "data/Script/Sample";
+import BackLog from "components/feature/BackLog/BackLog";
 
 
 function PlayGame() {
@@ -13,6 +14,7 @@ function PlayGame() {
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
   const [uiDisable, setUiDisable] = useState<boolean>(false);
+  const [viewBackLog, setViewBackLog] = useState<boolean>(false);
 
   // 현재 이야기 인덱스와 해당 인덱스의 캐릭터 이름과 스크립트를 상태로 관리
   const [displayIndex, setDisplayIndex] = useState<number>(0);
@@ -48,6 +50,12 @@ function PlayGame() {
   const toggleUiDisplay = () => {
     togglePause()
     setUiDisable(prev => !prev)
+  }
+
+  const toggleBackLog = () => {
+    togglePause()
+    setUiDisable(prev => !prev)
+    setViewBackLog(prev => !prev)
   }
 
   // 인게임 기능을 호출할때 오토와 스킵이 중단되도록 동작할 함수
@@ -113,6 +121,21 @@ function PlayGame() {
     setAnimationPaused(false);
   };
 
+  const createBackLog = (curIdx: number) => {
+    // 0부터 curIdx번째까지의 데이터를 포함한 새로운 배열을 생성
+    const backLog: [string, string][] = story.slice(0, curIdx + 1);
+    // 생성된 배열을 반환
+    return backLog;
+  }
+
+  const backLog: [string, string][] = createBackLog(displayIndex);
+
+  const goBackLogIndex = (index:number) => {
+    setDisplayIndex(index);
+    completeTextAnimation();
+    toggleBackLog();
+  }
+
   useEffect(() => {
     // 스킵 기능이 활성화되어 있는지 확인합니다.
     if (skip) {
@@ -148,7 +171,7 @@ function PlayGame() {
   }, [autoPlay, currentIndex, isAutoPlayInProgress]);
 
   // 부모 요소의 클릭 이벤트가 전파되지 않도록 차단!
-  const handleMenuBarClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+  const disableMouseEvent = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     e.stopPropagation();
   };
 
@@ -156,13 +179,20 @@ function PlayGame() {
     <StContainer onClick={handleNextClick}>
       {uiDisable ? null : (
         <StBottom>
-          <StMiniMenuBar onClick={handleMenuBarClick}>
+          <StMiniMenuBar onClick={disableMouseEvent}>
             {/* 게임 내 메뉴 바 */}
-            <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} skip={skip} toggleSkip={toggleSkip} toggleUiDisplay={toggleUiDisplay} />
+            <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} skip={skip} toggleSkip={toggleSkip} toggleUiDisplay={toggleUiDisplay} toggleBackLog={toggleBackLog} />
           </StMiniMenuBar>
           {/* 스크립트 출력 영역, 클릭하면 조건에 따라 동작 실행 */}
           <ScriptDisplay charName={charName} currentText={currentText} />
         </StBottom>
+      )}
+      {viewBackLog && (
+        <StModal onClick={disableMouseEvent}>
+          <StModalContent>
+            <BackLog backLog={backLog} toggleBackLog={toggleBackLog} goBackLogIndex={goBackLogIndex}/>
+          </StModalContent>
+        </StModal>
       )}
     </StContainer>
   );
@@ -178,6 +208,7 @@ const StContainer = styled.div`
   align-items: stretch;
   flex-direction: column;
   justify-content: flex-end;
+  position: relative;
 `;
 
 const StBottom = styled.div`
@@ -194,4 +225,28 @@ const StMiniMenuBar = styled.div`
   justify-content: flex-end;
   gap: 10px;
   height: 14%;
+`;
+
+// 모달 스타일 정의
+const StModal = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.5); /* 반투명한 회색 (RGB 색상 및 투명도 조절 가능) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+`;
+
+const StModalContent = styled.div`
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  /* padding: 20px; */
+  border-radius: 4px;
+  background-color: transparent;
+
 `;
