@@ -130,9 +130,12 @@ function PlayGame() {
 
   const backLog: [string, string][] = createBackLog(displayIndex);
 
-  const goBackLogIndex = (index:number) => {
+  const goBackLogIndex = (index: number) => {
     setDisplayIndex(index);
-    completeTextAnimation();
+    const [, newScript]: [string, string] = story[index];
+    setCurrentText(newScript);
+    setCurrentIndex(newScript.length);
+    setAnimationPaused(true);
     toggleBackLog();
   }
 
@@ -190,7 +193,7 @@ function PlayGame() {
       {viewBackLog && (
         <StModal onClick={disableMouseEvent}>
           <StModalContent>
-            <BackLog backLog={backLog} toggleBackLog={toggleBackLog} goBackLogIndex={goBackLogIndex}/>
+            <BackLog backLog={backLog} toggleBackLog={toggleBackLog} goBackLogIndex={goBackLogIndex} />
           </StModalContent>
         </StModal>
       )}
