@@ -18,7 +18,7 @@ function BackLog({ backLog, toggleBackLog, goBackLogIndex }: backLogProps) {
     }
   };
 
-  // backLog이 업데이트될 때마다 스크롤을 최하단으로 이동
+  // backLog가 업데이트될 때마다 스크롤을 최하단으로 이동
   useEffect(() => {
     scrollToBottom();
   }, [backLog]);
