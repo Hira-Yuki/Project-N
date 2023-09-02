@@ -1,17 +1,32 @@
+import { useRef, RefObject, useEffect } from 'react'
 import styled from 'styled-components'
 
 interface backLogProps {
   backLog: [string, string][]
   toggleBackLog: () => void
-  goBackLogIndex: (index:number) => void
+  goBackLogIndex: (index: number) => void
 }
 
-function BackLog({ backLog, toggleBackLog, goBackLogIndex}: backLogProps) {
+function BackLog({ backLog, toggleBackLog, goBackLogIndex }: backLogProps) {
+
+  const scrollRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+
+  // 스크롤을 항상 최하단으로 이동하는 함수
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  };
+
+  // backLog이 업데이트될 때마다 스크롤을 최하단으로 이동
+  useEffect(() => {
+    scrollToBottom();
+  }, [backLog]);
 
   return (
     <StContainer>
       <StCloseButton onClick={toggleBackLog}>닫기</StCloseButton>
-      <StLogArea>
+      <StLogArea ref={scrollRef}>
         {backLog.map((log, index) => (
           <StTextLog key={index} onClick={() => goBackLogIndex(index)}>
             {log[0] === "" ? null : (`〈${log[0]}〉`)}
