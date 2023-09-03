@@ -11,14 +11,14 @@ function BackLog({ backLog, toggleBackLog, goBackLogIndex }: backLogProps) {
 
   const scrollRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
-  // 스크롤을 항상 최하단으로 이동하는 함수
+  // 컴포넌트가 마운트될때 스크롤을 최하단으로 이동하는 함수
   const scrollToBottom = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   };
 
-  // backLog가 업데이트될 때마다 스크롤을 최하단으로 이동
+  // backLog가 업데이트될 때 스크롤을 최하단으로 이동
   useEffect(() => {
     scrollToBottom();
   }, [backLog]);

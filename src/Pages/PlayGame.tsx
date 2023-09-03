@@ -48,13 +48,13 @@ function PlayGame() {
   };
 
   const toggleUiDisplay = () => {
-    togglePause()
+    togglePause();
     setUiDisable(prev => !prev)
   }
 
   const toggleBackLog = () => {
-    togglePause()
-    setUiDisable(prev => !prev)
+    // UI를 가리는 기능을 토클해주면 자동 진행과 스킵도 중단됨
+    toggleUiDisplay();
     setViewBackLog(prev => !prev)
   }
 
