@@ -11,7 +11,7 @@ function BackLog({ backLog, toggleBackLog, goBackLogIndex }: backLogProps) {
 
   const scrollRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
-  // 컴포넌트가 마운트될때 스크롤을 최하단으로 이동하는 함수
+  // 스크롤을 최하단으로 이동하는 함수
   const scrollToBottom = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -23,13 +23,21 @@ function BackLog({ backLog, toggleBackLog, goBackLogIndex }: backLogProps) {
     scrollToBottom();
   }, [backLog]);
 
+
+  const handleAgree = (index:number) => {
+    const userAgrees: boolean = window.confirm('선택한 위치로 이동할까요?'); // 사용자에게 확인 대화상자를 띄웁니다.
+    if (userAgrees) {
+      goBackLogIndex(index)
+    }
+  };
+
   return (
     <StContainer>
       <StCloseButton onClick={toggleBackLog}>닫기</StCloseButton>
       <StLogArea ref={scrollRef}>
         {backLog.map((log, index) => (
-          <StTextLog key={index} onClick={() => goBackLogIndex(index)}>
-            {log[0] === "" ? null : (`〈${log[0]}〉`)}
+          <StTextLog key={index} onClick={() => handleAgree(index)}>
+            {log[0] === "" ? null : (<StScriptCharName>〈{log[0]}〉</StScriptCharName>)}
             {log[1]}
           </StTextLog>
         ))}
@@ -93,3 +101,8 @@ const StTextLog = styled.div`
     background-color: beige; /* 마우스를 올렸을 때 배경색 변경 */
   }
 `
+
+const StScriptCharName = styled.div`
+  font-weight: 800;
+  font-style: italic;
+`;
