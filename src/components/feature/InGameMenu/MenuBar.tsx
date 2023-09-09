@@ -18,9 +18,8 @@ function MenuBar({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay, 
 
   return (
     <StMiniMenuBar>
-      <StMenuButton type="button" onClick={toggleSkip} skip={skip}>스킵</StMenuButton>
-      <StMenuButton type="button" onClick={toggleAutoPlay} autoPlay={autoPlay}>자동 진행</StMenuButton>
-      {/* 백로그 기능은 모달료 구현합니다. */}
+      <StMenuButton type="button" onClick={toggleSkip} blinking={skip}>스킵</StMenuButton>
+      <StMenuButton type="button" onClick={toggleAutoPlay} blinking={autoPlay}>자동 진행</StMenuButton>
       <StMenuButton type="button" onClick={toggleBackLog}>백로그</StMenuButton>
       <StMenuButton type="button" onClick={toggleUiDisplay}>인터페이스 숨기기</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>설정</StMenuButton>
@@ -33,8 +32,7 @@ function MenuBar({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay, 
 export default React.memo(MenuBar);
 
 interface MenuButtonProps {
-  autoPlay?: boolean;
-  skip?: boolean;
+  blinking?: boolean;
 }
 
 const StMiniMenuBar = styled.div`
@@ -58,15 +56,16 @@ const StMenuButton = styled.button<MenuButtonProps>`
   background-color: transparent;
   border: 0;
   border: 1px solid #000;
-  color: #000
+  color: #000;
 
   ${props =>
-    props.autoPlay || props.skip
-      ?
+    props.blinking &&
       css`
       animation: ${blinkingAnimation} 2s infinite;
       animation-timing-function: ease-in-out;
-    `
-      :
-      ''};
+    `};
 `;
+
+// shouldForwardProp 설정
+// Props가 DOM에 전달되지 않도록 필터링해 줍니다.
+StMenuButton.shouldForwardProp = (prop) => prop !== 'blinking';
