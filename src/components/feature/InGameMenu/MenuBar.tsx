@@ -30,11 +30,11 @@ function MenuBar({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay, 
   )
 }
 
-export default MenuBar;
+export default React.memo(MenuBar);
 
 interface MenuButtonProps {
   autoPlay?: boolean;
-  skip?: boolean; // Added skip prop
+  skip?: boolean;
 }
 
 const blinkingAnimation = keyframes`

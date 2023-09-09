@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MenuBar from "components/feature/InGameMenu/MenuBar";
@@ -31,43 +31,43 @@ function PlayGame() {
   const isAutoPlayInProgress: boolean = autoPlay && currentIndex !== 0;
 
   // 토클 기능
-  const toggleAutoPlay = () => {
+  const toggleAutoPlay = useCallback(() => {
     // 스킵이 활성화 되어 있으면 스킵을 비활성화 시켜줌
     if (skip) {
-      setSkip(false);
+      setSkip(prev => !prev);
     }
     setAutoPlay((prevAutoPlay) => !prevAutoPlay);
-  };
+  },[skip]);
 
-  const toggleSkip = () => {
+  const toggleSkip = useCallback(() => {
     // 자동 진행이 활성화 되어 있으면 자동 진행을 비활성화 시켜줌
     if (autoPlay) {
-      setAutoPlay(false);
+      setAutoPlay(prev => !prev);
     }
     setSkip((prevSkip) => !prevSkip);
-  };
+  },[autoPlay]);
 
-  const toggleUiDisplay = () => {
+  const toggleUiDisplay = useCallback(() => {
     togglePause();
     setUiDisable(prev => !prev)
-  }
+  },[])
 
-  const toggleBackLog = () => {
+  const toggleBackLog = useCallback(() => {
     // UI를 가리는 기능을 토클해주면 자동 진행과 스킵도 중단됨
     toggleUiDisplay();
     setViewBackLog(prev => !prev)
-  }
+  },[toggleUiDisplay])
 
   // 인게임 기능을 호출할때 오토와 스킵이 중단되도록 동작할 함수
   const togglePause = () => {
-    setAutoPlay(false);
-    setSkip(false);
+    setAutoPlay(prev => false);
+    setSkip(prev => false);
   }
 
   // "다음 문장" 처리 함수
   const handleNextClick = () => {
     if (uiDisable) {
-      setUiDisable(false);
+      setUiDisable(prev => !prev);
       // ui 숨기기가 참일때는 다음 텍스트로 넘어가는 동작이 발생하면 안되므로 리턴하여 다음 동작을 차단함
       return;
     }
@@ -83,12 +83,12 @@ function PlayGame() {
   const completeTextAnimation = () => {
     setCurrentText(script);
     setCurrentIndex(scriptLength);
-    setAnimationPaused(true);
+    setAnimationPaused(prev => true);
   };
 
   // 다음 동작 수행 함수
   const proceedToNextAction = () => {
-    setAnimationPaused(false);
+    setAnimationPaused(prev => false);
 
     if (currentIndex < scriptLength) {
       completeTextAnimation();
@@ -118,7 +118,7 @@ function PlayGame() {
   const resetState = () => {
     setCurrentText("");
     setCurrentIndex(0);
-    setAnimationPaused(false);
+    setAnimationPaused(prev => false);
   };
 
   const createBackLog = (curIdx: number) => {
@@ -135,7 +135,7 @@ function PlayGame() {
     const [, newScript]: [string, string] = story[index];
     setCurrentText(newScript);
     setCurrentIndex(newScript.length);
-    setAnimationPaused(true);
+    setAnimationPaused(prev => true);
     toggleBackLog();
   }
 
