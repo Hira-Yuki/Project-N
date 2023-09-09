@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MenuBar from "components/feature/InGameMenu/MenuBar";
 import ScriptDisplay from "components/feature/ScriptDisplay/ScriptDisplay";
-import { story } from "data/Script/Sample";
+import { chapter1 } from "data/Script/Sample";
 import BackLog from "components/feature/BackLog/BackLog";
 
 
 function PlayGame() {
   const navigate = useNavigate();
+
+  // 챕터를 저장할 상태
+  const [story, setStory] = useState<[string, string][]>(chapter1);
 
   // 게임 내 기능 상태 
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
@@ -110,7 +113,7 @@ function PlayGame() {
 
   // 다음 이야기로 전환 함수
   const moveToNextStory = () => {
-    setDisplayIndex(displayIndex + 1);
+    setDisplayIndex(prev => prev + 1);
     resetState();
   };
 
