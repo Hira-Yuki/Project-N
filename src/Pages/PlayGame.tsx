@@ -182,10 +182,10 @@ function PlayGame() {
     <StContainer onClick={handleNextClick}>
       {uiDisable ? null : (
         <StBottom>
-          <StMiniMenuBar onClick={disableMouseEvent}>
+          <div onClick={disableMouseEvent}>
             {/* 게임 내 메뉴 바 */}
             <MenuBar autoPlay={autoPlay} toggleAutoPlay={toggleAutoPlay} skip={skip} toggleSkip={toggleSkip} toggleUiDisplay={toggleUiDisplay} toggleBackLog={toggleBackLog} />
-          </StMiniMenuBar>
+          </div>
           {/* 스크립트 출력 영역, 클릭하면 조건에 따라 동작 실행 */}
           <ScriptDisplay charName={charName} currentText={currentText} />
         </StBottom>
@@ -220,14 +220,6 @@ const StBottom = styled.div`
   align-items: stretch;
   flex-direction: column;
   justify-content: flex-end;
-`;
-
-const StMiniMenuBar = styled.div`
-  margin: 0 1% 1% 1%;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  height: 14%;
 `;
 
 // 모달 스타일 정의

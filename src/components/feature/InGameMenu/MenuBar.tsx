@@ -17,7 +17,7 @@ function MenuBar({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay, 
   }
 
   return (
-    <>
+    <StMiniMenuBar>
       <StMenuButton type="button" onClick={toggleSkip} skip={skip}>스킵</StMenuButton>
       <StMenuButton type="button" onClick={toggleAutoPlay} autoPlay={autoPlay}>자동 진행</StMenuButton>
       {/* 백로그 기능은 모달료 구현합니다. */}
@@ -26,7 +26,7 @@ function MenuBar({ toggleAutoPlay, autoPlay, toggleSkip, skip, toggleUiDisplay, 
       <StMenuButton type="button" onClick={onClickHandler}>설정</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>저장</StMenuButton>
       <StMenuButton type="button" onClick={onClickHandler}>불러오기</StMenuButton>
-    </>
+    </StMiniMenuBar>
   )
 }
 
@@ -36,6 +36,14 @@ interface MenuButtonProps {
   autoPlay?: boolean;
   skip?: boolean;
 }
+
+const StMiniMenuBar = styled.div`
+  margin: 0 1% 1% 1%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  /* height: 14%; */
+`;
 
 const blinkingAnimation = keyframes`
   0%, 50%, 100% {
@@ -49,7 +57,8 @@ const blinkingAnimation = keyframes`
 const StMenuButton = styled.button<MenuButtonProps>`
   background-color: transparent;
   border: 0;
-  border: 1px solid black;
+  border: 1px solid #000;
+  color: #000
 
   ${props =>
     props.autoPlay || props.skip
